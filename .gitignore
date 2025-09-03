@@ -1,0 +1,54 @@
+# Node.js dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Logs
+logs
+*.log
+logs/*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Build output
+dist/
+build/
+
+# IDE specific
+.vscode/
+.idea/
+*.swp
+
+# Coverage and testing
+coverage/
+.nyc_output/
+
+# Temp files
+tmp/
+*.tmp
+
+# Cache
+.cache/
+.next/
+out/
+
+# Database / dump files
+*.sqlite
+*.sqlite3
+*.db
+*.sql
+
+# Local Redis dump
+dump.rdb
+
+# uploads img and resize
+uploads/
