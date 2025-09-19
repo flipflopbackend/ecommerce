@@ -25,7 +25,7 @@ module.exports = (logger) => {
 
     //products for user panel
 
-    router.get("/allproducts", listAllProduct)
+    router.get("/allproducts/:page/:limit", listAllProduct)
     router.get("/:id/products", getProduct)
 
     //orderpage in userpanel

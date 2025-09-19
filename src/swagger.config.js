@@ -12,7 +12,7 @@ const options = {
         },
         servers: [
             {
-                url: "http://localhost:5000"
+                url: "http://192.168.0.4:5000"
             }
         ],
         components: {

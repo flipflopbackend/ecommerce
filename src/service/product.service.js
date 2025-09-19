@@ -1,29 +1,31 @@
-const productService = require("../models/product.model")
-
+const productModel = require("../models/product.model")
 
 async function createProduct(data) {
-    const product = await productService.createProduct(data)
-    return product
+    return await productModel.createProduct(data)
 }
 
-async function listAllProduct() {
-    return await productService.findallProduct()
+async function listAllProduct(limit, offset) {
+    return await productModel.findAllProduct(limit, offset);
 }
 
-async function getProductbyId(id) {
-    const product = await productService.findProductId(id)
+async function countAllProduct() {
+    return await productModel.countAllProduct();
+}
+
+async function getProductById(id) {
+    const product = await productModel.findProductId(id)
     if (!product) throw new Error("Product not found")
     return product
 }
 
 async function updateProduct(id, data) {
-    const product = await productService.updateProduct(id, data)
+    const product = await productModel.updateProduct(id, data)
     if (!product) throw new Error("Product not found")
     return product
 }
 
 async function deleteProduct(id) {
-    const deleted = await productService.deleteProduct(id)
+    const deleted = await productModel.deleteProduct(id)
     if (!deleted) throw new Error("Product not found")
     return true
 }
@@ -31,8 +33,8 @@ async function deleteProduct(id) {
 module.exports = {
     createProduct,
     listAllProduct,
-    getProductbyId,
+    countAllProduct,
+    getProductById,
     updateProduct,
     deleteProduct
 }
-

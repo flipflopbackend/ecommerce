@@ -10,11 +10,21 @@ const createProduct = async ({ name, description, price, stock }) => {
     return { id: rows.insertId, name, description, price, stock }
 }
 
-const findallProduct = async () => {
-    const [rows] = await pool.query(`select * from products`)
-    return rows
-}
 
+const findAllProduct = async (limit, offset) => {
+    const [rows] = await pool.query(
+        `SELECT * FROM products LIMIT ? OFFSET ?`,
+        [limit, offset]
+    );
+    return rows;
+};
+
+const countAllProduct = async () => {
+    const [[result]] = await pool.query(
+        `SELECT COUNT(*) as totalCount FROM products`
+    );
+    return result.totalCount;
+};
 const findProductId = async (id) => {
     const [rows] = await pool.query(`select * from products where id =?`, [id])
     return rows[0]
@@ -41,7 +51,8 @@ const deleteProduct = async (id) => {
 module.exports = {
     createProduct,
     findProductId,
-    findallProduct,
+    findAllProduct,
+    countAllProduct,
     updateProduct,
     deleteProduct
 }

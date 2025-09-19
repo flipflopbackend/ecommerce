@@ -3,15 +3,17 @@ const express = require('express');
 const db = require("./config/sql.db");
 const logger = require("./utils/logger");
 const authRouter = require("./router/auth.router");
-
 const swagger = require("./swagger.config");
-
-
+const cors = require("cors")
 
 
 const app = express()
 
-
+app.use(cors({
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+    allowedHeaders: ["Content-Type", "Authorization"]
+}));
 app.use((req, res, next) => {
     if (req.originalUrl === "/payment/webhook") {
         next();
@@ -21,7 +23,6 @@ app.use((req, res, next) => {
         });
     }
 });
-
 
 
 db.query("select 1").then(() => {
@@ -42,7 +43,7 @@ app.use(authRouter(logger))
 port = process.env.PORT || 8000
 
 app.listen(port, () => {
-    console.log(`Server is running on http://localhost:${port}`);
+    console.log(`Server is running on http://192.168.0.4:${port}`);
     logger.info("Mysql connected running on live")
 
 })

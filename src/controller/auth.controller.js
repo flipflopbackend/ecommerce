@@ -5,6 +5,7 @@ module.exports = (logger) => {
     const UserRegister = async (req, res) => {
         try {
             const { userName, email, password, role } = req.body
+            console.log(req.body);
             await userService.createUser({ userName, email, password, role })
             logger.info(`New user created ${email}`)
             res.status(201).json({

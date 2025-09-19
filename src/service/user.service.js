@@ -4,6 +4,7 @@ const { generateToken } = require("../middleware/auth.token")
 
 async function createUser({ userName, email, password, role }) {
     const hashpassword = await bcrypt.hash(password, 10)
+
     return await User.createUser({ userName, email, password: hashpassword, role })
 }
 

@@ -78,39 +78,61 @@
 
 /**
  * @swagger
+ * components:
+ *   schemas:
+ *     Product:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: integer
+ *           example: 1
+ *         name:
+ *           type: string
+ *           example: "Laptop"
+ *         description:
+ *           type: string
+ *           example: "High-budget gaming Laptop"
+ *         price:
+ *           type: number
+ *           example: 1800
+ *         stock:
+ *           type: integer
+ *           example: 10
+ *
+ *     ProductResponse:
+ *       type: object
+ *       properties:
+ *         success:
+ *           type: boolean
+ *           example: true
+ *         message:
+ *           type: string
+ *           example: "New Product Created"
+ *         product:
+ *           $ref: '#/components/schemas/Product'
+ */
+
+/**
+ * @swagger
  * /createproduct:
  *   post:
- *     summary: Create a new Product(Admin only)
+ *     summary: Create a new Product (Admin only)
  *     tags: [Product]
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             required:
- *               - name
- *               - description
- *               - price
- *               - stock
- *             properties:
- *               name: 
- *                 type: string
- *                 example: "Laptop"
- *               description:
- *                 type: string
- *                 example: "High-budget gaming Laptop"
- *               price:
- *                 type: number
- *                 example: 1800
- *               stock:
- *                 type: integer
- *                 example: 10
+ *             $ref: '#/components/schemas/Product'
  *     responses:
  *       201:
  *         description: Product created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ProductResponse'
  *       401:
- *         description: Unauthorized - invailed or missing token
+ *         description: Unauthorized - invalid or missing token
  *       403:
  *         description: Forbidden - only admin can create product
  *       500:
@@ -119,41 +141,59 @@
 
 /**
  * @swagger
- * /allproducts:
+ * /allproducts/{page}/{limit}:
  *   get:
- *     summary: List of all products 
+ *     summary: List all products with pagination
  *     tags: [Product]
+ *     parameters:
+ *       - in: path
+ *         name: page
+ *         required: true
+ *         schema:
+ *           type: integer
+ *           example: 1
+ *         description: Page number (starting from 1)
+ *       - in: path
+ *         name: limit
+ *         required: true
+ *         schema:
+ *           type: integer
+ *           example: 10
+ *         description: Number of products per page
  *     responses:
  *       200:
- *         description: all products
+ *         description: Products fetched successfully with pagination            
  *       500:
- *         description:server Error
+ *         description: Server Error
  */
+
 
 /**
  * @swagger
  * /{id}/products:
  *   get:
- *     summary: get the product
+ *     summary: Get a product by ID
  *     tags: [Product]
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
  *         schema:
- *           type: string
- *         description: ProductId
+ *           type: integer
+ *         description: Product ID
  *     responses:
  *       200:
  *         description: Product found successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Product'
  *       404:
  *         description: Product not found
  *       500:
- *         description: server error
- *  
- * 
- * 
+ *         description: Server Error
  */
+
 /**
  * @swagger
  * /{id}/updateproducts:
@@ -165,37 +205,27 @@
  *         name: id
  *         required: true
  *         schema:
- *           type: string
- *         description: ProductId
+ *           type: integer
+ *         description: Product ID
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             properties:
- *               name: 
- *                 type: string
- *                 example: "Laptop"
- *               description:
- *                 type: string
- *                 example: "High-budget gaming laptop"
- *               price:
- *                 type: number
- *                 example: 1234
- *               stock:
- *                 type: integer
- *                 example: 12
+ *             $ref: '#/components/schemas/Product'
  *     responses:
  *       200:
  *         description: Product updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Product'
  *       401:
- *         description: Unauthorized - invaild or missing token
+ *         description: Unauthorized - invalid or missing token
  *       403:
- *         description: Forbidden - only admin can create products
+ *         description: Forbidden - only admin can update products
  *       500:
  *         description: Product updation failed
- *  
  */
 
 /**
@@ -209,16 +239,26 @@
  *         name: id
  *         required: true
  *         schema:
- *           type: string
- *         description: ProductId
+ *           type: integer
+ *         description: Product ID
  *     responses:
  *       200:
  *         description: Product deleted successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: "Product successfully deleted"
  *       404:
  *         description: Product not found
  *       500:
- *         description: server error
- * 
+ *         description: Server Error
  */
 
 /**
