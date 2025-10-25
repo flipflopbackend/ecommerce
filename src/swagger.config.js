@@ -12,7 +12,7 @@ const options = {
         },
         servers: [
             {
-                url: "http://192.168.0.4:5000"
+                url: "https://ecommerce-9b02.onrender.com"
             }
         ],
         components: {
