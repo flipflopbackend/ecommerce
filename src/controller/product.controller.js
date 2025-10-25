@@ -58,6 +58,33 @@ module.exports = (logger) => {
         }
     };
 
+    const filterProductByName = async (req, res) => {
+        try {
+            const { name, page = 1, limit = 10 } = req.query;
+
+            const pageNum = parseInt(page);
+            const limitNum = parseInt(limit);
+            const offset = (pageNum - 1) * limitNum;
+
+            const filters = { name };
+            const products = await productService.filterProduct(filters, limitNum, offset);
+
+            res.status(200).json({
+                success: true,
+                page: pageNum,
+                limit: limitNum,
+                products
+            });
+        } catch (error) {
+            res.status(500).json({
+                success: false,
+                message: "Product filtering failed",
+                error: error.message,
+            });
+        }
+    };
+
+
     const upgradeProduct = async (req, res) => {
         try {
             const product = await productService.updateProduct(req.params.id, req.body);
@@ -91,5 +118,6 @@ module.exports = (logger) => {
         getProduct,
         upgradeProduct,
         removeProduct,
+        filterProductByName
     };
 };

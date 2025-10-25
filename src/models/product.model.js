@@ -40,7 +40,21 @@ const updateProduct = async (id, { name, description, price, stock }) => {
     return findProductId(id)
 }
 
+const filterProduct = async (filters = {}, limit = 10, offset = 0) => {
+    let query = `SELECT * FROM products WHERE 1=1 `;
+    const params = [];
 
+    if (filters.name) {
+        query += `AND name LIKE ? `;
+        params.push(`%${filters.name}%`);
+    }
+
+    query += `LIMIT ? OFFSET ?`;
+    params.push(limit, offset);
+
+    const [rows] = await pool.query(query, params);
+    return rows;
+};
 const deleteProduct = async (id) => {
     const product = await findProductId(id)
     if (!product) return null
@@ -54,5 +68,6 @@ module.exports = {
     findAllProduct,
     countAllProduct,
     updateProduct,
-    deleteProduct
+    deleteProduct,
+    filterProduct
 }

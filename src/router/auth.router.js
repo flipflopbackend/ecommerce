@@ -5,7 +5,7 @@ const { isAdmin, verifyToken } = require('../middleware/auth.token');
 module.exports = (logger) => {
     const router = express.Router()
     const { UserRegister, LoginByUser } = require("../controller/auth.controller")(logger)
-    const { createByProduct, listAllProduct, getProduct, upgradeProduct, removeProduct } = require("../controller/product.controller")(logger)
+    const { createByProduct, filterProductByName, listAllProduct, getProduct, upgradeProduct, removeProduct } = require("../controller/product.controller")(logger)
     const { ordercreate, getorder, UserOrders, AlllistOrders, updateOrder } = require("../controller/order.controller")(logger)
     const { createPayment, handleWebhook } = require("../controller/payment.controller")(logger)
     const { createSupportTicket, getTickets } = require('../controller/support.controller')(logger)
@@ -35,6 +35,7 @@ module.exports = (logger) => {
     router.get("/userorders", verifyToken, UserOrders)
 
     //orderpage in adminpanel
+    router.get("/products/filter", filterProductByName);
 
     router.get("/allorders", verifyToken, isAdmin, AlllistOrders)
     router.patch("/:id/updateorder", verifyToken, isAdmin, updateOrder)

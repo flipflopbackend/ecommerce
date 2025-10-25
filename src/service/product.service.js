@@ -11,6 +11,9 @@ async function listAllProduct(limit, offset) {
 async function countAllProduct() {
     return await productModel.countAllProduct();
 }
+async function filterProduct(filters, limit, offset) {
+    return await productModel.filterProduct(filters, limit, offset);
+}
 
 async function getProductById(id) {
     const product = await productModel.findProductId(id)
@@ -36,5 +39,6 @@ module.exports = {
     countAllProduct,
     getProductById,
     updateProduct,
-    deleteProduct
+    deleteProduct,
+    filterProduct
 }
