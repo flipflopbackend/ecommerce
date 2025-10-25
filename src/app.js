@@ -43,7 +43,7 @@ app.use(authRouter(logger))
 port = process.env.PORT || 8000
 
 app.listen(port, () => {
-    console.log(`Server is running on http://192.168.0.4:${port}`);
+    console.log(`Server is running on ${port}`);
     logger.info("Mysql connected running on live")
 
 })
